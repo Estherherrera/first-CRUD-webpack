@@ -13,7 +13,7 @@ export const createTodoHtml = (todo) => {
     const htmlTodo = `<li class="${ (todo.completed) ? 'completed': ''}" data-id="${ todo.id }">
                         <div class="view">
                             <input class="toggle" type="checkbox" ${ (todo.completed) ? 'checked': ''}>
-                            <label>${todo.task}</label>
+                            <label id="task">${todo.task}</label>
                             <button class="destroy"></button>
                         </div>
                         <input class="edit" value="Create a TodoMVC template">
@@ -40,10 +40,12 @@ txtInput.addEventListener('keyup', (event) => {
 
 divTodoList.addEventListener('click', (event) => {
 
+    console.log(event.target.parentElement.parentElement)
+
     const nameElement = event.target.localName; //Input Button, label
     const todoElement = event.target.parentElement.parentElement
     const todoId = todoElement.getAttribute('data-id')
-
+    console.log(event.target.parentElement.parentElement)
 
 
     if (nameElement.includes('input')) { //Click en el check
@@ -51,6 +53,25 @@ divTodoList.addEventListener('click', (event) => {
         todoElement.classList.toggle('completed');
 
     }
+
+    if (nameElement.includes('label')) {
+
+        document.querySelector("#task").innerHTML = `<input class="modify" type="text" value="">`
+        const modify = document.querySelector('.modify')
+        modify.addEventListener('keyup', (event) => {
+
+            if (event.keyCode === 13 && modify.value.length > 0) {
+
+                const updateTodo = new Todo(modify.value)
+                todoList.addTodo(updateTodo)
+                todoList.deleteTodo(todoId)
+                divTodoList.removeChild(todoElement)
+                createTodoHtml(updateTodo)
+            }
+        })
+    }
+
+
 
     if (nameElement.includes('button')) {
         todoList.deleteTodo(todoId)

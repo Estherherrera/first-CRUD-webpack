@@ -29,10 +29,6 @@ export class TodoList {
         this.saveInLocalStorage()
     }
 
-    editTodo() {
-
-    }
-
     saveInLocalStorage() {
         localStorage.setItem('todo', JSON.stringify(this.todos))
     }
