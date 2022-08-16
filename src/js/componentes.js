@@ -13,7 +13,7 @@ export const createTodoHtml = (todo) => {
     const htmlTodo = `<li class="${ (todo.completed) ? 'completed': ''}" data-id="${ todo.id }">
                         <div class="view">
                             <input class="toggle" type="checkbox" ${ (todo.completed) ? 'checked': ''}>
-                            <label id="task">${todo.task}</label>
+                            <label id="todoId">${todo.task}</label>
                             <button class="destroy"></button>
                         </div>
                         <input class="edit" value="Create a TodoMVC template">
@@ -33,6 +33,7 @@ txtInput.addEventListener('keyup', (event) => {
         console.log(txtInput.value)
         const addTodo = new Todo(txtInput.value)
         todoList.addTodo(addTodo)
+        txtInput.value = txtInput.ariaPlaceholder
 
         createTodoHtml(addTodo)
     }
@@ -56,7 +57,7 @@ divTodoList.addEventListener('click', (event) => {
 
     if (nameElement.includes('label')) {
 
-        document.querySelector("#task").innerHTML = `<input class="modify" type="text" value="">`
+        document.querySelector("#todoId").innerHTML = `<input class="modify" type="text" value="">`
         const modify = document.querySelector('.modify')
         modify.addEventListener('keyup', (event) => {
 

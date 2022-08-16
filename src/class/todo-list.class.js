@@ -4,8 +4,15 @@ export class TodoList {
         this.loadTheLocalStorage()
     }
 
-    addTodo(todo) {
-        this.todos.push(todo);
+    addTodo(record) {
+        for (const todo of this.todos) {
+            if (todo.task == record.task) {
+                alert("Esta tarea ya existe")
+            } else {
+                this.todos.push(todo);
+            }
+
+        }
         this.saveInLocalStorage()
     }
 
